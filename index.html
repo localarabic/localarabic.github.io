@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+<body>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <div style="width:320px;height:fit-content;margin-left: auto;margin-right: auto;margin-top: 200px;padding: 0px;">
+
+        <div id='place-video' style="width:100%;margin: 0px;padding: 0px;"></div>
+        <div id='place-caption' style="width:100%;height:30px;line-height: 30px;vertical-align: middle;background-color: #eeeeee;"></div>
+
+         <div class="radio-inline">
+            <label style="font-weight: 100;">
+                <input type="radio" name="optionRadios" id="radio_en" value="en" checked>
+                en
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label style="font-weight: 100;">
+                <input type="radio" name="optionRadios" id="radio_ko" value="ko">
+                ko
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label style="font-weight: 100;">
+                <input type="radio" name="optionRadios" id="radio_ar" value="ar">
+                ar
+            </label>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+
+    <script>
+
+        var W = $('#place-video').width();
+        var H = W*9/16;
+        $('#place-video').css('height', H);
+
+        var player, time_update_interval;
+
+        clearInterval(time_update_interval);
+
+
+        var ClipModel = Backbone.Model.extend({
+           default: {
+               startTime:0,
+               endTime:0,
+               en:'',
+               ko:'',
+               ar:''
+           }
+        });
+
+        var ClipCollection = Backbone.Collection.extend({
+            model:ClipModel ,
+
+            catchClip: function (_Time) {
+                var obj = _.filter(this.toJSON(), function(_m) {
+                   if (Number(_m.startTime) <= Number(_Time) && Number(_Time) < Number(_m.endTime) ) {
+                       return true;
+                   } else {
+                       return false;
+                   }
+                });
+                return obj;
+            }
+        });
+
+        // Plase Type Video Information //////////////////////////////////////
+        var vInfo = {id: '1bDshIV2Ecs', startTime:5, endTime: 30};
+        //////////////////////////////////////////////////////////////////////
+
+        // Push Clip In Follwing /////////////////////////////////////////////
+
+        var clC = new ClipCollection({})
+
+        var clM = new ClipModel({startTime:10, endTime: 15, en:'kjljljljljkljkjjljlkjlj', ko:'안녕하세요.'});
+        clC.add(clM);
+
+        var clM2 = new ClipModel({startTime:17, endTime: 20, en:'jkljkjjljlkjlj', ko:'안녕히 가세요.'});
+        clC.add(clM2);
+
+        //////////////////////////////////////////////////////////////////////
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('place-video', {
+                width: W,
+                height: H,
+                videoId: vInfo.id,
+                playerVars: {
+                  rel:0,
+                  controls: 0,
+                  suggestedQuality: 'medium',
+                  showinfo: 0
+                },
+                events: {
+                    onReady : function () {
+                        player.cueVideoById({
+                            videoId: vInfo.id,
+                            startSeconds: vInfo.startTime,
+                            endSeconds: vInfo.endTime,
+                            suggestedQuality:'medium'
+                         });
+
+                        clearInterval(time_update_interval);
+
+                        time_update_interval = setInterval(function () {
+                            var _Time = player.getCurrentTime();
+                            var arrayElem = clC.catchClip(_Time);
+
+                            if (arrayElem.length != 0) {
+                                $('#place-caption').html('');
+
+                                var checked = $( "input:checked" ).val();
+                                if (checked == 'ko') {
+                                    $('#place-caption').css('direction', 'ltr');
+                                    $('#place-caption').html(arrayElem[0].ko);
+                                }
+                                else if (checked == 'en') {
+                                    $('#place-caption').css('direction', 'ltr');
+                                    $('#place-caption').html(arrayElem[0].en);
+                                }
+                                else if (checked == 'ar') {
+                                    $('#place-caption').css('direction', 'rtl');
+                                    $('#place-caption').html(arrayElem[0].ar);
+                                }
+
+                            } else {
+                                $('#place-caption').html('');
+                            }
+                        }, 300);
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
