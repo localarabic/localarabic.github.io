@@ -90,7 +90,7 @@ and open the template in the editor.
         });
 
         // Plase Type Video Information //////////////////////////////////////
-        var vInfo = {id: 'yTkwDJHmeYQ', startTime:19, endTime: 65};
+        var vInfo = {id: 'yTkwDJHmeYQ', startTime:19, endTime:65};
         //////////////////////////////////////////////////////////////////////
 
         // Push Clip In Follwing /////////////////////////////////////////////
@@ -164,7 +164,17 @@ and open the template in the editor.
                             var _Time = player.getCurrentTime();
                             var arrayElem = clC.catchClip(_Time);
 
-                            if (arrayElem.length != 0) {
+                            if (vInfo.endTime == Math.round(_Time)) {
+                                player.stopVideo();
+
+                                player.cueVideoById({
+                                    videoId: vInfo.id,
+                                    startSeconds: vInfo.startTime,
+                                    endSeconds: vInfo.endTime,
+                                    suggestedQuality:'medium'
+                                 });
+                            }
+                            else if (arrayElem.length != 0) {
                                 $('#place-caption').html('');
 
                                 var checked = $( "input:checked" ).val();
