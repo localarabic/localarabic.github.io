@@ -18,15 +18,9 @@ and open the template in the editor.
         <div id='place-video' style="width:100%;margin: 0px;padding: 0px;"></div>
         <div id='place-caption' style="width:100%;height:30px;line-height: 30px;vertical-align: middle;background-color: #eeeeee;color:grey;text-align:center;"></div>
 
-         <div class="radio-inline">
+        <div class="radio-inline" style="margin-left:10px;">
             <label style="font-weight: 100;">
-                <input type="radio" name="optionRadios" id="radio_en" value="en" checked>
-                en
-            </label>
-        </div>
-        <div class="radio-inline">
-            <label style="font-weight: 100;">
-                <input type="radio" name="optionRadios" id="radio_ko" value="ko">
+                <input type="radio" name="optionRadios" id="radio_ko" value="ko" checked>
                 ko
             </label>
         </div>
@@ -40,6 +34,19 @@ and open the template in the editor.
             <label style="font-weight: 100;">
                 <input type="radio" name="optionRadios" id="radio_no" value="no">
                 no caption
+            </label>
+        </div>
+
+        <div class="radio-inline" style="margin-left:30px;">
+            <label style="font-weight: 100;">
+                <input type="radio" name="speed" id="speed1x" value="1x" checked>
+                1x
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label style="font-weight: 100;">
+                <input type="radio" name="speed" id="speed-half" value="half">
+                0.5x
             </label>
         </div>
     </div>
@@ -97,7 +104,7 @@ and open the template in the editor.
 
         var clC = new ClipCollection({})
 
-        var clM1 = new ClipModel({startTime:20, endTime: 30, ko:'네, 뭐! 어떻게 어떻게 어떻게',ar:'أيوة , شو . له له له له '});
+        var clM1 = new ClipModel({startTime:22, endTime: 30, ko:'네, 뭐! 어떻게 어떻게 어떻게',ar:'أيوة , شو . له له له له '});
         clC.add(clM1);
 
         var clM2 = new ClipModel({startTime:30, endTime: 35, ko:'아이~~고, 지금 갈께',ar:'لا حول ولا قوة إلا بالله , هيني جاي, هيني جاي '});
@@ -164,6 +171,14 @@ and open the template in the editor.
                             var _Time = player.getCurrentTime();
                             var arrayElem = clC.catchClip(_Time);
 
+                            var speed_status = $('input[name=speed]:checked').val();
+
+                            if (speed_status == 'half') {
+                                player.setPlaybackRate(0.5);
+                            } else {
+                                player.setPlaybackRate(1);
+                            }
+
                             if (vInfo.endTime == Math.round(_Time)) {
                                 player.stopVideo();
 
@@ -177,7 +192,7 @@ and open the template in the editor.
                             else if (arrayElem.length != 0) {
                                 $('#place-caption').html('');
 
-                                var checked = $( "input:checked" ).val();
+                                var checked = $( 'input[name=optionRadios]:checked' ).val();
                                 if (checked == 'ko') {
                                     $('#place-caption').css('direction', 'ltr');
                                     $('#place-caption').html(arrayElem[0].ko);
