@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>story_1_1</title>
+        <title>story_1_2</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
@@ -27,7 +27,7 @@ and open the template in the editor.
     <div style="max-width:640px;height:fit-content;margin-left: auto;margin-right: auto;margin-top: 0px;padding: 0px;">
 
         <div id='place-video' style="width:100%;margin: 0px;padding: 0px;"></div>
-        <div id='place-caption' style="margin-top:5px;font-size:1.2em;width:100%; text-align:left;padding:5px;"></div>
+        <div id='place-caption' style="margin-top:0px;font-size:1.2em;width:100%;text-align:left;padding:5px;"></div>
     </div>
 
 
@@ -45,7 +45,7 @@ and open the template in the editor.
         var H = W*9/16;
         $('#place-video').css('height', H);
 
-        $('#place-caption').css('height', $('body').height() - H - 20);
+        $('#place-caption').css('height', $('body').height() - H -10);
 
         var player, time_update_interval;
 
@@ -76,7 +76,7 @@ and open the template in the editor.
         });
 
         // Plase Type Video Information //////////////////////////////////////
-        var vInfo = {id: '4BdoTpRUMLs', startTime:6, endTime:21};
+        var vInfo = {id: '4BdoTpRUMLs', startTime:20, endTime:30};
         //////////////////////////////////////////////////////////////////////
 
         // Push Clip In Follwing /////////////////////////////////////////////
@@ -84,41 +84,26 @@ and open the template in the editor.
         var clC = new ClipCollection({})
 
         var html1 = '';
-        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">مرحبا</span>안녕하세요</div>';
-        var clM1 = new ClipModel({startTime:8, endTime: 9, html:html1});
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">هادا</span>이 아이는 (영어에 It 에 해당함 남성는 "하다" 여성은 "하이" 물건은 상관없음)</div>';
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">سامر</span>싸메르 예요</div>';
+        var clM1 = new ClipModel({startTime:20, endTime: 22, html:html1});
         clC.add(clM1);
 
         var html2 = '';
-        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">اسمي</span>내 이름은</div>';
-        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">لينا</span>리나 입니다</div>';
-        var clM2 = new ClipModel({startTime:9, endTime: 10, html:html2});
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">سامر</span>싸메르는</div>';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">بيحب</span>좋아해요</div>';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">يطعمي البسة</span>고양이에게 먹이를 주는 것을</div>';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">حليب</span>우유</div>';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">كل يوم الصبح</span>매일 아침에</div>';
+        var clM2 = new ClipModel({startTime:22, endTime: 27, html:html2});
         clC.add(clM2);
 
         var html3 = '';
-        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">واليوم</span>오늘은</div>';
-        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">رح أحكيلكم</span>이야기를 할거예요</div>';
-        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">قصة كتير حلوة</span>아주 재미있는 이야기를</div>';
-        var clM3 = new ClipModel({startTime:10, endTime: 13, html:html3});
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">بس</span>하지만</div>';
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">البسة</span>고양이는</div>';
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">مش مبسوطة</span>고맙지 않습니다</div>';
+        var clM3 = new ClipModel({startTime:27, endTime: 30, html:html3});
         clC.add(clM3);
-
-        var html4 = '';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">عن ولد</span>소년에 대해</div>';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">اسمه</span>그의 이름은 ("이씀"은 이름인데 뒤에 "모"가 붙어서 그의 이름이 된다.)</div>';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">سامر</span>싸메르</div>';
-        var clM4 = new ClipModel({startTime:13, endTime: 15, html:html4});
-        clC.add(clM4);
-
-        var html5 = '';
-        html5 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">وهو</span>그는</div>';
-        html5 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">بيحب</span>좋아해요</div>';
-        html5 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">كتير أشياء</span>많은 것들을</div>';
-        var clM5 = new ClipModel({startTime:15, endTime: 18, html:html5});
-        clC.add(clM5);
-
-        var html6 = '';
-        html6 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">جاهزين؟</span>준비되셨나요?</div>';
-        var clM6 = new ClipModel({startTime:18, endTime: 20, html:html6});
-        clC.add(clM6);
 
         //////////////////////////////////////////////////////////////////////
 
