@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>story_1_1</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet"/>
+
+        <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+        </style>
+    </head>
+<body>
+
+
+    <div style="max-width:640px;height:fit-content;margin-left: auto;margin-right: auto;margin-top: 0px;padding: 0px;">
+
+        <div id='place-video' style="width:100%;margin: 0px;padding: 0px;"></div>
+        <div id='place-caption' style="margin-top:5px;font-size:1.2em;width:100%; background-color: #eeeeee;color:grey;text-align:left;"></div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+
+    <script>
+
+        var W = $('#place-video').width();
+        var H = W*9/16;
+        $('#place-video').css('height', H);
+
+        $('#place-caption').css('height', $('body').height() - H - 20);
+
+        var player, time_update_interval;
+
+        clearInterval(time_update_interval);
+
+
+        var ClipModel = Backbone.Model.extend({
+           default: {
+               startTime:0,
+               endTime:0,
+               html:''
+           }
+        });
+
+        var ClipCollection = Backbone.Collection.extend({
+            model:ClipModel ,
+
+            catchClip: function (_Time) {
+                var obj = _.filter(this.toJSON(), function(_m) {
+                   if (Number(_m.startTime) <= Number(_Time) && Number(_Time) < Number(_m.endTime) ) {
+                       return true;
+                   } else {
+                       return false;
+                   }
+                });
+                return obj;
+            }
+        });
+
+        // Plase Type Video Information //////////////////////////////////////
+        var vInfo = {id: '4BdoTpRUMLs', startTime:6, endTime:20};
+        //////////////////////////////////////////////////////////////////////
+
+        // Push Clip In Follwing /////////////////////////////////////////////
+
+        var clC = new ClipCollection({})
+
+        var html1 = '';
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">مرحبا</span>안녕하세요</div>';
+        var clM1 = new ClipModel({startTime:8, endTime: 9, html:html1});
+        clC.add(clM1);
+
+        var html2 = '';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">اسمي</span>내 이름은</div>';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">لينا</span>리나 입니다</div>';
+        var clM2 = new ClipModel({startTime:9, endTime: 10, html:html2});
+        clC.add(clM2);
+
+        var html3 = '';
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">واليوم</span>오늘은</div>';
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">رح أحكيلكم</span>이야기를 할거예요</div>';
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">قصة كتير حلوة</span>아주 재미있는 이야기를</div>';
+        var clM3 = new ClipModel({startTime:10, endTime: 13, html:html3});
+        clC.add(clM3);
+
+        var html4 = '';
+        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">عن ولد</span>소년에 대해</div>';
+        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">اسمه</span>그의 이름은 ("이씀"은 이름인데 뒤에 "모"가 붙어서 그의 이름이 된다.)</div>';
+        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">سامر</span>싸메드</div>';
+        var clM4 = new ClipModel({startTime:13, endTime: 15, html:html4});
+        clC.add(clM4);
+
+        //////////////////////////////////////////////////////////////////////
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('place-video', {
+                width: W,
+                height: H,
+                videoId: vInfo.id,
+                playerVars: {
+                  rel:0,
+                  controls: 0,
+                  suggestedQuality: 'medium',
+                  showinfo: 0
+                },
+                events: {
+                    onReady : function () {
+                        player.cueVideoById({
+                            videoId: vInfo.id,
+                            startSeconds: vInfo.startTime,
+                            endSeconds: vInfo.endTime,
+                            suggestedQuality:'medium'
+                         });
+
+                        clearInterval(time_update_interval);
+
+                        time_update_interval = setInterval(function () {
+                            var _Time = player.getCurrentTime();
+                            var arrayElem = clC.catchClip(_Time);
+
+                            if (vInfo.endTime == Math.round(_Time)) {
+                                player.stopVideo();
+
+                                player.cueVideoById({
+                                    videoId: vInfo.id,
+                                    startSeconds: vInfo.startTime,
+                                    endSeconds: vInfo.endTime,
+                                    suggestedQuality:'medium'
+                                 });
+                            }
+                            else if (arrayElem.length != 0) {
+                                $('#place-caption').html('');
+
+                                $('#place-caption').html(arrayElem[0].html);
+
+                            } else {
+                                $('#place-caption').html('');
+                            }
+                        }, 300);
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
