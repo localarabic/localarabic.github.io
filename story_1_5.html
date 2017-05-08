@@ -6,42 +6,28 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>local arabic</title>
+        <title>story_1_5</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet"/>
+
+        <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+        }
+        </style>
     </head>
 <body>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 
-    <div style="max-width:640px;height:fit-content;margin-left: auto;margin-right: auto;margin-top: 100px;padding: 0px;">
+
+    <div style="max-width:640px;height:fit-content;margin-left: auto;margin-right: auto;margin-top: 0px;padding: 0px;">
 
         <div id='place-video' style="width:100%;margin: 0px;padding: 0px;"></div>
-        <div id='place-caption' style="width:100%;height:30px;line-height: 30px;vertical-align: middle;background-color: #eeeeee;color:grey;text-align:center;"></div>
-
-         <div class="radio-inline">
-            <label style="font-weight: 100;">
-                <input type="radio" name="optionRadios" id="radio_en" value="en" checked>
-                en
-            </label>
-        </div>
-        <div class="radio-inline">
-            <label style="font-weight: 100;">
-                <input type="radio" name="optionRadios" id="radio_ko" value="ko">
-                ko
-            </label>
-        </div>
-        <div class="radio-inline">
-            <label style="font-weight: 100;">
-                <input type="radio" name="optionRadios" id="radio_ar" value="ar">
-                ar
-            </label>
-        </div>
-        <div class="radio-inline">
-            <label style="font-weight: 100;">
-                <input type="radio" name="optionRadios" id="radio_no" value="no">
-                no caption
-            </label>
-        </div>
+        <div id='place-caption' style="margin-top:0px;font-size:1.2em;width:100%;text-align:left;padding:5px;"></div>
     </div>
 
 
@@ -59,6 +45,8 @@ and open the template in the editor.
         var H = W*9/16;
         $('#place-video').css('height', H);
 
+        $('#place-caption').css('height', $('body').height() - H -10);
+
         var player, time_update_interval;
 
         clearInterval(time_update_interval);
@@ -68,9 +56,7 @@ and open the template in the editor.
            default: {
                startTime:0,
                endTime:0,
-               en:'',
-               ko:'',
-               ar:''
+               html:''
            }
         });
 
@@ -90,18 +76,20 @@ and open the template in the editor.
         });
 
         // Plase Type Video Information //////////////////////////////////////
-        var vInfo = {id: '1bDshIV2Ecs', startTime:5, endTime: 30};
+        var vInfo = {id: '4BdoTpRUMLs', startTime:55, endTime:80};
         //////////////////////////////////////////////////////////////////////
 
         // Push Clip In Follwing /////////////////////////////////////////////
 
         var clC = new ClipCollection({})
 
-        var clM = new ClipModel({startTime:10, endTime: 15, en:'kjljljljljkljkjjljlkjlj', ko:'안녕하세요.'});
-        clC.add(clM);
-
-        var clM2 = new ClipModel({startTime:17, endTime: 20, en:'jkljkjjljlkjlj', ko:'안녕히 가세요.'});
-        clC.add(clM2);
+        var html1 = '';
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">وسامر</span>싸메르는</div>';
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">بيحب يلعب</span>좋아해요 노는거</div>';
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">لعبة كتير حلوة </span>게임 재미있는</div>';
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">مع أبوه</span>아빠랑</div>';
+        var clM1 = new ClipModel({startTime:55, endTime: 59, html:html1});
+        clC.add(clM1);
 
         //////////////////////////////////////////////////////////////////////
 
@@ -131,22 +119,20 @@ and open the template in the editor.
                             var _Time = player.getCurrentTime();
                             var arrayElem = clC.catchClip(_Time);
 
-                            if (arrayElem.length != 0) {
+                            if (vInfo.endTime == Math.round(_Time)) {
+                                player.stopVideo();
+
+                                player.cueVideoById({
+                                    videoId: vInfo.id,
+                                    startSeconds: vInfo.startTime,
+                                    endSeconds: vInfo.endTime,
+                                    suggestedQuality:'medium'
+                                 });
+                            }
+                            else if (arrayElem.length != 0) {
                                 $('#place-caption').html('');
 
-                                var checked = $( "input:checked" ).val();
-                                if (checked == 'ko') {
-                                    $('#place-caption').css('direction', 'ltr');
-                                    $('#place-caption').html(arrayElem[0].ko);
-                                }
-                                else if (checked == 'en') {
-                                    $('#place-caption').css('direction', 'ltr');
-                                    $('#place-caption').html(arrayElem[0].en);
-                                }
-                                else if (checked == 'ar') {
-                                    $('#place-caption').css('direction', 'rtl');
-                                    $('#place-caption').html(arrayElem[0].ar);
-                                }
+                                $('#place-caption').html(arrayElem[0].html);
 
                             } else {
                                 $('#place-caption').html('');

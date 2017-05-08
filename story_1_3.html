@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>story_1_2</title>
+        <title>story_1_3</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
@@ -76,7 +76,7 @@ and open the template in the editor.
         });
 
         // Plase Type Video Information //////////////////////////////////////
-        var vInfo = {id: '4BdoTpRUMLs', startTime:20, endTime:35};
+        var vInfo = {id: '4BdoTpRUMLs', startTime:33, endTime:47};
         //////////////////////////////////////////////////////////////////////
 
         // Push Clip In Follwing /////////////////////////////////////////////
@@ -84,35 +84,33 @@ and open the template in the editor.
         var clC = new ClipCollection({})
 
         var html1 = '';
-        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">هادا</span>이 아이는 (영어에 It 에 해당함 남성는 "하다" 여성은 "하이" 물건은 상관없음)</div>';
-        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">سامر</span>싸메르 예요</div>';
-        var clM1 = new ClipModel({startTime:20, endTime: 22, html:html1});
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">سامر</span>싸메르</div>';
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">بيحب ياكل</span>좋아해요 먹는 것을</div>';
+        html1 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">لحاله</span>혼자서</div>';
+        var clM1 = new ClipModel({startTime:33, endTime: 36, html:html1});
         clC.add(clM1);
 
         var html2 = '';
-        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">سامر</span>싸메르는</div>';
-        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">بيحب</span>좋아해요</div>';
-        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">يطعمي البسة</span>고양이에게 먹이를 주는 것을</div>';
-        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">حليب</span>우유</div>';
-        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">كل يوم الصبح</span>매일 아침에</div>';
-        var clM2 = new ClipModel({startTime:22, endTime: 27, html:html2});
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">كل يوم</span>매일</div>';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">بدون</span>~ 없이</div>';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">ما حدا</span>아무도, anybody "하다"라 들리는 말이 it "하다"으로 들리지만 다른 "하다"이다. 잘 들어보세요</div>';
+        html2 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">يساعده</span>도와주다</div>';
+        var clM2 = new ClipModel({startTime:36, endTime: 40, html:html2});
         clC.add(clM2);
 
         var html3 = '';
-        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">بس</span>하지만</div>';
-        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">البسة</span>고양이는</div>';
-        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">مش مبسوطة</span>고맙지 않습니다</div>';
-        var clM3 = new ClipModel({startTime:27, endTime: 29, html:html3});
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">ما بده مساعدة</span>도움을 원하지 않아요. 무싸아데 가 도움 이다.</div>';
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">الماما</span>엄마의</div>';
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">ما بده مساعدة</span>도움을 원하지 않아요.</div>';
+        html3 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">البابا</span>아빠의</div>';
+        var clM3 = new ClipModel({startTime:40, endTime: 43, html:html3});
         clC.add(clM3);
 
         var html4 = '';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">ليش ؟</span>왜</div>';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">شوفو</span>보세요</div>';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">وين</span>어디에</div>';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">سامر</span>싸메르가</div>';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">عم بيحط</span>붓는지</div>';
-        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">الحليب</span>우유(를) 푸스하에서는 를에 해당하는 조사가 존재하나 암미야에서는 발음하지 않는다</div>';
-        var clM4 = new ClipModel({startTime:29, endTime: 34, html:html4});
+        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">ولا بده</span>원하지 않아요</div>';
+        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">مساعدة</span>도움을</div>';
+        html4 += '<div><span class="btn btn-default btn-lg" style="direction:rtl;">البسة</span>고양이의</div>';
+        var clM4 = new ClipModel({startTime:43, endTime: 46, html:html4});
         clC.add(clM4);
         //////////////////////////////////////////////////////////////////////
 
